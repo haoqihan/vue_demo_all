@@ -1,29 +1,38 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
-import TestWorld from '@/components/TestWorld'
-import TestWorld2 from '@/components/TestWorld2'
+
 Vue.use(Router)
 
 export default new Router({
   routes: [
     {
       path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld,
-      redirect:"/test",
+      redirect: '/dashboard'
+    },
+    {
+      path: '/',
+      component: () => import(/* webpackChunkName:"home"  */ '../components/common/Home.vue'),
+      meta: { title: "基础文件" },
       children: [
         {
-          path: '/test',
-          name: 'Test',
-          component: TestWorld
+          path: '/dashboard',
+          component: () => import(/* webpackChunkName:"dashboard" */ '../components/page/Dashboard.vue'),
+          meta: { title: '仪表盘' }
         },
         {
-          path: '/test2',
-          name: 'Test2',
-          component: TestWorld2
+          path: '/404',
+          component: () => import(/* webpackChunkName:"404" */ '../components/page/404.vue')
         }
       ]
+    },
+    {
+      path: '/login',
+      component: () => import(/* webpackChunkName:"login" */'../components/page/Login.vue'),
+      meta: { title: "登录" }
+    },
+    {
+      path: '*',
+      redirect: '/404'
     }
   ]
 })

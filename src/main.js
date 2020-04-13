@@ -5,13 +5,16 @@ import App from './App'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import router from './router'
-Vue.use(ElementUI)
+
+Vue.use(ElementUI, {
+    size: "small"
+})
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
 new Vue({
-  el: '#app',
-  router,
-  components: { App },
-  template: '<App/>'
-})
+
+    router,
+    render: h => h(App)
+
+}).$mount('#app')

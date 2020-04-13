@@ -1,0 +1,14 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body,
+#app,
+.wrapper {
+    width: 100%;
+    height: 100%;
+    /* 内容会被修剪，并且其余内容是不可见的。*/
+    overflow: hidden;
+}
