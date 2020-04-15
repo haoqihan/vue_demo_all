@@ -16,6 +16,31 @@
           </el-tooltip>
         </div>
         <!-- 消息中心 -->
+        <div class="btn-bell">
+          <el-tooltip effect="dark" :content="message?`有${message}条消息`:`消息中心`" placement="bottom">
+            <router-link to="/tabs">
+              <i class="el-icon-bell"></i>
+            </router-link>
+          </el-tooltip>
+          <span class="btn-bell-badge" v-if="message"></span>
+        </div>
+        <!-- 用户头像 -->
+        <div class="user-avator">
+          <img src alt />
+        </div>
+        <!-- 用户名下拉菜单 -->
+        <el-dropdown class="user-name" trigger="click" @command="handleCommand">
+          <span class="el-dropdown-link">
+            {{username}}
+            <i class="el-icon-caret-bottom"></i>
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <a href="https://github.com/haoqihan" target="_blank">
+              <el-dropdown-item>项目仓库</el-dropdown-item>
+            </a>
+            <el-dropdown-item divided command="loginout">退出登录</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
       </div>
     </div>
   </div>
@@ -31,6 +56,12 @@ export default {
       name: "姓名",
       message: 2
     };
+  },
+  computed: {
+    username() {
+      let username = localStorage.getItem("ms_username");
+      return username ? username : this.name;
+    }
   },
   methods: {
     // 用户名下拉菜单选择事件
@@ -71,6 +102,11 @@ export default {
       }
       this.fullscreen = !this.fullscreen;
     }
+  },
+  mounted(){
+    if (document.body.clientWidth < 1500){
+      this.collapseChage();
+    }
   }
 };
 </script>
@@ -84,9 +120,9 @@ export default {
   font-size: 22px;
   color: #fff;
 }
-.collapse-btn{
+.collapse-btn {
   float: left;
-  padding:0 21px;
+  padding: 0 21px;
   cursor: pointer;
   line-height: 70px;
 }
@@ -108,5 +144,47 @@ export default {
   transform: rotate(45deg); /* 顺时针旋转 45度 */
   margin-right: 5px;
   font-size: 24px;
+}
+.btn-bell,
+.btn-fullscreen {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  border-radius: 15px;
+  cursor: pointer; /* 光标呈现为指示链接的指针（一只手） */
+}
+
+.btn-bell-badge {
+  position: absolute;
+  right: 0;
+  top: -2px;
+  width: 8px;
+  height: 8px;
+  border-radius: 4px;
+  background: #f56c6c;
+  color: #fff;
+}
+.btn-bell .el-icon-bel {
+  color: #fff;
+}
+.user-avator{
+  margin-left: 10px;
+}
+.user-name{
+  margin-left: 10px;
+}
+.user-avator img{
+  display:block;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+.el-dropdown-link{
+  color: #fff;
+  cursor: pointer;
+}
+.el-dropdown-menu__item{
+  text-align: center;
 }
 </style>
